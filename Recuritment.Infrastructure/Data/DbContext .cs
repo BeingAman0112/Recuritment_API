@@ -1,22 +1,26 @@
 ﻿using Microsoft.Extensions.Configuration;
+using System;
+using System.Collections.Generic;
 using System.Data;
-using Npgsql;
+using Microsoft.Data.SqlClient;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace Recruitment.Infrastructure.Data
+namespace Recruitment.infrastructure.Data
 {
-    public class DbContext
+    public class DbContext 
     {
         private readonly IDbConnection _connection;
 
         public DbContext(IConfiguration configuration)
         {
-            // Read connection string from appsettings.json or environment variable
+            // Reads connection string from appsettings.json
             var connectionString = configuration.GetConnectionString("DefaultConnection");
-
-            // Initialize PostgreSQL connection
-            _connection = new NpgsqlConnection(connectionString);
+            _connection = new SqlConnection(connectionString);
         }
 
         public IDbConnection Connection => _connection;
+
     }
 }
